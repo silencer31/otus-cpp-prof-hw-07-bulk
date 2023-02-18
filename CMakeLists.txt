@@ -5,19 +5,34 @@ set(PROJECT_VERSION 0.0.${PATCH_VERSION})
 
 project(bulk VERSION ${PROJECT_VERSION})
 
+find_package(GTest REQUIRED)
+
 configure_file(version.h.in version.h)
 
 #Main target 
 add_executable(bulk main.cpp "collector.cpp" "interpreter.cpp" "file_logger.cpp")
 add_library(lib_bulk lib.cpp "collector.cpp" "interpreter.cpp" "file_logger.cpp")
 
-set_target_properties(bulk lib_bulk PROPERTIES
+#Test target
+add_executable(g_test_input gtest_input.cpp "collector.cpp" "interpreter.cpp" "file_logger.cpp")
+
+set_target_properties(bulk lib_bulk g_test_input PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
 )
 
 target_include_directories(lib_bulk 
     PRIVATE "${CMAKE_BINARY_DIR}"
+)
+
+# Add src to the include directories for the test target
+target_include_directories(g_test_input
+    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+# Add googletest to the include directories for the test target
+target_include_directories(g_test_input
+    PRIVATE ${GTEST_INCLUDE_DIRS}
 )
 
 target_link_libraries(bulk PRIVATE
@@ -31,11 +46,17 @@ if (MSVC)
     target_compile_options(lib_bulk PRIVATE
         /W4
     )
+	target_compile_options(g_test_input PRIVATE
+        /W4
+    )
 else ()
     target_compile_options(bulk PRIVATE
         -Wall -Wextra -pedantic -Werror
     )
     target_compile_options(lib_bulk PRIVATE
+        -Wall -Wextra -pedantic -Werror
+    )
+	target_compile_options(g_test_input PRIVATE
         -Wall -Wextra -pedantic -Werror
     )
 endif()
