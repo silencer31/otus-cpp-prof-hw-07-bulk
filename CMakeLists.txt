@@ -8,8 +8,8 @@ project(bulk VERSION ${PROJECT_VERSION})
 configure_file(version.h.in version.h)
 
 #Main target 
-add_executable(bulk main.cpp)
-add_library(lib_bulk lib.cpp)
+add_executable(bulk main.cpp "collector.cpp" "interpreter.cpp" "file_logger.cpp")
+add_library(lib_bulk lib.cpp "collector.cpp" "interpreter.cpp" "file_logger.cpp")
 
 set_target_properties(bulk lib_bulk PROPERTIES
     CXX_STANDARD 17
