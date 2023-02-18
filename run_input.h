@@ -8,7 +8,7 @@
 void run_commands_input(int number)
 {
 	std::shared_ptr<FileLogger>   file_logger_ptr = std::make_shared<FileLogger>();
-	std::shared_ptr<Collector>    collector_ptr   = std::make_shared<Collector>(file_logger_ptr, number);
+	std::shared_ptr<Collector>    collector_ptr   = std::make_shared<Collector>(file_logger_ptr, static_cast<size_t>(number));
 	std::shared_ptr<Interpreter>  interpreter_ptr = std::make_shared<Interpreter>(collector_ptr);
 
 	// Проверка работы.

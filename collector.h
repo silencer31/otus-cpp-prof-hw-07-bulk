@@ -25,7 +25,7 @@ class Collector {
 public:
 	Collector() = delete;
 
-	explicit Collector(const std::shared_ptr<FileLogger>& flptr, int size) :
+	explicit Collector(const std::shared_ptr<FileLogger>& flptr, size_t size) :
 		file_logger_ptr(flptr), collection_max_size(size), storage_type(StorageType::UNKNOWN_T),
 		open_brackets_number(0), close_brackets_number(0)
 	{
@@ -61,7 +61,7 @@ public:
 private:
 	const std::shared_ptr<FileLogger> file_logger_ptr;
 	
-	int collection_max_size;
+	size_t collection_max_size;
 	std::vector<std::string> commands_collection;
 
 	StorageType storage_type;
