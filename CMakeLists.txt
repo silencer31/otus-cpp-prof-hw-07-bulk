@@ -39,6 +39,18 @@ target_link_libraries(bulk PRIVATE
     lib_bulk
 )
 
+# Link test target against gtest libraries
+if (MSVC)
+    target_link_libraries(g_test_input PRIVATE
+    	${GTEST_BOTH_LIBRARIES}
+    )
+else ()
+    target_link_libraries(g_test_input PRIVATE
+    	${GTEST_BOTH_LIBRARIES}
+		pthread
+    )
+endif()
+
 if (MSVC)
     target_compile_options(bulk PRIVATE
         /W4

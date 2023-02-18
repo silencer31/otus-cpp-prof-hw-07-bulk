@@ -58,6 +58,14 @@ public:
 	*/
 	void reset_collection();
 
+	/**
+	* Функция для проверки корректного создания файлов в рамках тестирования.
+	* @return время создания файла.
+	*/
+	file_time get_file_time() {
+		return first_command_time;
+	}
+
 private:
 	const std::shared_ptr<FileLogger> file_logger_ptr;
 	
