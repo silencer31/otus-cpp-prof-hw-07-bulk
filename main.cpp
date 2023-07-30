@@ -4,7 +4,6 @@
 
 int main(int args_number, char const** args)
 {
-   
     if (args_number != 2) {
         std::cerr << "The number of commands hasn't been passed!" << std::endl;
         return 1;

@@ -21,7 +21,7 @@ enum class StorageType {
 /**
 * @brief  ласс, содержащий коллекцию команд и управл€ющий ею.
 */
-class Collector {
+class Collector : public Observable {
 public:
 	Collector() = delete;
 

@@ -22,3 +22,8 @@ void FileLogger::write_commands_to_file(const std::vector<std::string>& collecti
 		}
 	}
 }
+
+void FileLogger::update()
+{
+
+}
