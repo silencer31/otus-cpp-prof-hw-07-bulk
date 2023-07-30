@@ -1,6 +1,6 @@
 #pragma once
 
-#include "collector.h"
+#include "file_logger.h"
 
 /**
 * @brief Класс - анализатор поступающих команд из консоли.
@@ -9,10 +9,18 @@ class Interpreter {
 public:
 	Interpreter() = delete;
 	
-	explicit Interpreter(std::shared_ptr<Collector>  c_ptr) 
-		: collector_ptr(c_ptr) {}
+	explicit Interpreter(std::shared_ptr<Collector>  cltr_ptr)
+		: collector_ptr(cltr_ptr) {
+		// Создаем File Logger и передаем ему указатель на коллекцию с данными.
+		file_logger_ptr = std::make_shared<FileLogger>(collector_ptr);
+
+		// У коллекции с данными указываем File Logger как обозреватель.
+		collector_ptr->attach(file_logger_ptr);
+	}
 	
-	~Interpreter() = default;
+	~Interpreter() {
+		collector_ptr->detach(file_logger_ptr);
+	}
 
 	/**
 	* Обработка введённой строки.
@@ -25,5 +33,6 @@ public:
 	void handle_eof();
 
 private:
-	const std::shared_ptr<Collector>  collector_ptr;
+	const std::shared_ptr<Collector>  collector_ptr; // Указатель на объект с коллекцией с данными.
+	std::shared_ptr<FileLogger>		  file_logger_ptr; // Указатель на объект для вывода коллекции данных в файл.
 };

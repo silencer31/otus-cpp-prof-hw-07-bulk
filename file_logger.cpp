@@ -6,7 +6,7 @@
 /**
 * Запись коллекции в файл с указанием временной метки.
 */
-void FileLogger::write_commands_to_file(const std::vector<std::string>& collection, const file_time& ftime)
+void FileLogger::write_commands_to_file(const command_iterator& c_begin, const command_iterator& c_end, const file_time& ftime)
 {
 	auto seconds = std::chrono::duration_cast<std::chrono::seconds>(ftime.time_since_epoch()).count();
 	
@@ -15,9 +15,9 @@ void FileLogger::write_commands_to_file(const std::vector<std::string>& collecti
 
 	std::ofstream file(filename.str(), std::ofstream::out);
 	
-	for (command_iterator comm_iter = collection.cbegin(); comm_iter != collection.cend(); ++comm_iter) {
+	for (command_iterator comm_iter = c_begin; comm_iter != c_end; ++comm_iter) {
 		file << (*comm_iter);
-		if (comm_iter + 1 != collection.cend()) {
+		if (comm_iter + 1 != c_end) {
 			file << ", ";
 		}
 	}
@@ -25,5 +25,5 @@ void FileLogger::write_commands_to_file(const std::vector<std::string>& collecti
 
 void FileLogger::update()
 {
-
+	write_commands_to_file(collector_ptr->get_iter_begin(), collector_ptr->get_iter_end(), collector_ptr->get_file_time());
 }

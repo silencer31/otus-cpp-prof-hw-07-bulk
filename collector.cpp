@@ -88,7 +88,8 @@ void Collector::flush_collection(bool clear_flag)
 {
 	if (commands_collection.empty()) { return; }
 
-	file_logger_ptr->write_commands_to_file(commands_collection, first_command_time);
+	notify(); // Оповещаем обозревателей.
+
 	output_collection();
 
 	if (clear_flag) {

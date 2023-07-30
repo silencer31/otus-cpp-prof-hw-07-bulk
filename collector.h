@@ -1,6 +1,14 @@
 #pragma once
 
-#include "file_logger.h"
+#include <vector>
+#include <string>
+#include <memory>
+#include <chrono>
+
+#include "Observ/observer.h"
+
+using command_iterator = std::vector<std::string>::const_iterator;
+using file_time = std::chrono::system_clock::time_point;
 
 // Тип введённых данных.
 enum class InputType {
@@ -25,8 +33,8 @@ class Collector : public Observable {
 public:
 	Collector() = delete;
 
-	explicit Collector(const std::shared_ptr<FileLogger>& flptr, size_t size) :
-		file_logger_ptr(flptr), collection_max_size(size), storage_type(StorageType::UNKNOWN_T),
+	explicit Collector( size_t size) :
+		collection_max_size(size), storage_type(StorageType::UNKNOWN_T),
 		open_brackets_number(0), close_brackets_number(0)
 	{
 		commands_collection.reserve(collection_max_size);
@@ -48,7 +56,7 @@ public:
 	void output_collection();
 
 	/**
-	*  Вывод всей коллекции в консоль и запись в файл.
+	*  Вывод всей коллекции в консоль и запись в файл через оповещение наблюдателя.
 	*  @param clear_flag - очищать ли коллекцию после вывода.
 	*/
 	void flush_collection(bool clear_flag);
@@ -66,9 +74,21 @@ public:
 		return first_command_time;
 	}
 
+	/**
+	* @return константный итератор на начало коллекции.
+	*/
+	command_iterator get_iter_begin() {
+		return commands_collection.cbegin();
+	}
+
+	/**
+	* @return константный итератор на конец коллекции.
+	*/
+	command_iterator get_iter_end() {
+		return commands_collection.end();
+	}
+
 private:
-	const std::shared_ptr<FileLogger> file_logger_ptr;
-	
 	size_t collection_max_size;
 	std::vector<std::string> commands_collection;
 

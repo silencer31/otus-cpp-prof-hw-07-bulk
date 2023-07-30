@@ -13,9 +13,8 @@ TEST(SomeGtests, TestInputA)
 	times.reserve(4);
 
     int test_number = 3;
-
-    std::shared_ptr<FileLogger>   file_logger_ptr = std::make_shared<FileLogger>();
-    std::shared_ptr<Collector>    collector_ptr   = std::make_shared<Collector>(file_logger_ptr, static_cast<size_t>(test_number));
+    
+    std::shared_ptr<Collector>    collector_ptr   = std::make_shared<Collector>(static_cast<size_t>(test_number));
     std::unique_ptr<Interpreter>  interpreter_ptr = std::make_unique<Interpreter>(collector_ptr);
 
 	std::istringstream input;
