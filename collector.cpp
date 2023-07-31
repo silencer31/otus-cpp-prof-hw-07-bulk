@@ -1,7 +1,5 @@
 #include "collector.h"
 
-#include <iostream>
-
 void Collector::handle_input(InputType input_type, const std::string& command)
 {
 	switch (input_type) {
@@ -72,25 +70,11 @@ void Collector::handle_input(InputType input_type, const std::string& command)
 }
 
 
-void Collector::output_collection()
-{
-	for (command_iterator comm_iter = commands_collection.cbegin(); comm_iter != commands_collection.cend(); ++comm_iter) {
-		std::cout << (*comm_iter);
-		if (comm_iter + 1 != commands_collection.cend()) {
-			std::cout << ", ";
-		}
-	}
-
-	std::cout << std::endl;
-}
-
 void Collector::flush_collection(bool clear_flag)
 {
 	if (commands_collection.empty()) { return; }
 
 	notify(); // Оповещаем обозревателей.
-
-	output_collection();
 
 	if (clear_flag) {
 		commands_collection.clear();

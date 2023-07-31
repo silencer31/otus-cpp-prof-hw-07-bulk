@@ -51,12 +51,7 @@ public:
 	void handle_input(InputType input_type, const std::string& command);
 
 	/**
-	* Вывод коллекции в консоль.
-	*/
-	void output_collection();
-
-	/**
-	*  Вывод всей коллекции в консоль и запись в файл через оповещение наблюдателя.
+	*  Вывод всей коллекции в консоль и запись в файл через оповещение наблюдателей.
 	*  @param clear_flag - очищать ли коллекцию после вывода.
 	*/
 	void flush_collection(bool clear_flag);

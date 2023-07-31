@@ -10,11 +10,11 @@ find_package(GTest REQUIRED)
 configure_file(version.h.in version.h)
 
 #Main target 
-add_executable(bulk main.cpp "collector.cpp" "interpreter.cpp" "file_logger.cpp")
-add_library(lib_bulk lib.cpp "collector.cpp" "interpreter.cpp" "file_logger.cpp")
+add_executable(bulk main.cpp "collector.cpp" "interpreter.cpp" "file_logger.cpp" "console.cpp")
+add_library(lib_bulk lib.cpp "collector.cpp" "interpreter.cpp" "file_logger.cpp" "console.cpp")
 
 #Test target
-add_executable(g_test_input gtest_input.cpp "collector.cpp" "interpreter.cpp" "file_logger.cpp")
+add_executable(g_test_input gtest_input.cpp "collector.cpp" "interpreter.cpp" "file_logger.cpp" "console.cpp")
 
 set_target_properties(bulk lib_bulk g_test_input PROPERTIES
     CXX_STANDARD 17
